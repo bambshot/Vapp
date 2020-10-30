@@ -1,0 +1,26 @@
+version: "3"
+services:
+  web:
+    build: ./web
+    ports:
+      - "80:80"
+    volumes:
+      - ./html:/var/www/html
+
+  db:
+    image: mysql:8.0.22
+    environment:
+      MYSQL_DATABASE: vapp_db
+      MYSQL_USER: local-user
+      MYSQL_PASSWORD: local-pw
+      MYSQL_ROOT_PASSWORD: root
+      TZ: "Asia/Tokyo"
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: db
+    ports:
+      - "8080:80"
