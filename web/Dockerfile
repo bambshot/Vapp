@@ -3,7 +3,11 @@ FROM php:7.4-apache
 RUN apt-get update && \
     # 必要パッケージのインストール
     apt-get -y install zip unzip git libicu-dev && \
-    docker-php-ext-install pdo_mysql intl 
+    docker-php-ext-install pdo_mysql intl
+
+COPY ./apache2.conf /etc/apache2/
+RUN mv /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled && \
+    /bin/sh -c a2enmod rewrite
 
 # composerのインストール
 WORKDIR /usr/local
